@@ -1,18 +1,39 @@
 import { StatusBar } from "expo-status-bar";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import * as Location from "expo-location";
+import React, { useState, useEffect } from "react";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
-// const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export default function App() {
+  const [city, setCity] = useState("Loading...");
+  const [location, setLocation] = useState();
+  const [ok, setOk] = useState(true);
+  const ask = async () => {
+    const { granted } = await Location.requestForegroundPermissionsAsync();
+    if (!granted) {
+      setOk(false);
+    }
+    const {
+      coords: { latitude, longitude },
+    } = await Location.getCurrentPositionAsync({ accuracy: 5 });
+    const location = await Location.reverseGeocodeAsync(
+      { latitude, longitude },
+      { useGoogleMaps: false }
+    );
+    setCity(location[0].city);
+  };
+  useEffect(() => {
+    ask();
+  }, []);
   return (
     <View style={styles.container}>
       <StatusBar style="auto"></StatusBar>
       <View style={styles.city}>
-        <Text style={styles.cityName}>Seoul</Text>
+        8<Text style={styles.cityName}>{city}</Text>
       </View>
       <ScrollView
-        pagingEnabled // 한 페이지에 하나씩만 들어가게해주는거?
+        pagingEnabled
         horizontal
         showsHorizontalScrollIndicator={false}
         // indicatorStyle="white"
