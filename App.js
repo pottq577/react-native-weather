@@ -3,14 +3,48 @@ import { StyleSheet, Text, View } from "react-native";
 
 export default function App() {
   return (
-    // 기본적으로 모든 View는 Flex Container
-    // Flex Direction의 기본값은 Column
-    // 거의 대부분의 레이아웃 디자인 상황에서 너비와 높이에 기반해서 만들지 않음! => 반응형
-    // 비율로 설정하여 레이아웃을 설정함
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: "tomato" }}></View>
-      <View style={{ flex: 1.5, backgroundColor: "teal" }}></View>
-      <View style={{ flex: 1, backgroundColor: "orange" }}></View>
+    <View style={styles.container}>
+      <StatusBar style="auto"></StatusBar>
+      <View style={styles.city}>
+        <Text style={styles.cityName}>Seoul</Text>
+      </View>
+      <View style={styles.weather}>
+        <View style={styles.day}>
+          <Text style={styles.temp}>27</Text>
+          <Text style={styles.description}>Sunny</Text>
+        </View>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "tomato",
+  },
+  city: {
+    flex: 1.2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cityName: {
+    fontSize: 68,
+    fontWeight: "500",
+  },
+  weather: {
+    flex: 3,
+  },
+  day: {
+    flex: 1,
+    alignItems: "center",
+  },
+  temp: {
+    fontSize: 180,
+    marginTop: 50,
+  },
+  description: {
+    marginTop: -30,
+    fontSize: 60,
+  },
+});
